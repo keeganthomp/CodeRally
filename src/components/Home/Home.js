@@ -64,6 +64,7 @@ class Home extends Component {
       snackbarOpen: false,
       initialProjects: [],
       projects: [],
+      sortedProjectsByDate: [],
       snackbarText: '',
     };
     this.addProject = this.addProject.bind(this);
@@ -79,6 +80,8 @@ class Home extends Component {
   async fetchProjects() {
     const projects = await AppService.getProjects();
     this.setState({ projects });
+    // sorting projects by earliest date created
+    this.setState({ sortedProjectsByDate: [...projects].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) })
     this.setState({ initialProjects: projects });
     this.setState({ loadingProjects: false });
   }
@@ -112,10 +115,8 @@ class Home extends Component {
   }
 
   renderProjects() {
-    const { projects, loadingProjects } = this.state;
+    const { sortedProjectsByDate, loadingProjects } = this.state;
     const { classes } = this.props;
-    // sorting projects by earliest date created
-    const sortedProjectsByDate = [...projects].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
     return (
       <Paper className={classes.root}>
         <TextField
