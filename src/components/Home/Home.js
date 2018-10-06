@@ -114,7 +114,8 @@ class Home extends Component {
   renderProjects() {
     const { projects, loadingProjects } = this.state;
     const { classes } = this.props;
-
+    // sorting projects by earliest date created
+    const sortedProjectsByDate = [...projects].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
     return (
       <Paper className={classes.root}>
         <TextField
@@ -141,7 +142,7 @@ class Home extends Component {
           {!loadingProjects && (
             <TableBody>
               {
-                projects.map(({
+                sortedProjectsByDate.map(({
                   name, description, tech, createdAt,
                 }) => {
                   const currentDate = new Date();
