@@ -79,9 +79,8 @@ class Home extends Component {
 
   async fetchProjects() {
     const projects = await AppService.getProjects();
-    this.setState({ projects });
     // sorting projects by earliest date created
-    this.setState({ sortedProjectsByDate: [...projects].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) })
+    this.setState({ projects: [...projects].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) });
     this.setState({ initialProjects: projects });
     this.setState({ loadingProjects: false });
   }
@@ -115,7 +114,7 @@ class Home extends Component {
   }
 
   renderProjects() {
-    const { sortedProjectsByDate, loadingProjects } = this.state;
+    const { projects, loadingProjects } = this.state;
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
@@ -143,7 +142,7 @@ class Home extends Component {
           {!loadingProjects && (
             <TableBody>
               {
-                sortedProjectsByDate.map(({
+                projects.map(({
                   name, description, tech, createdAt,
                 }) => {
                   const currentDate = new Date();
