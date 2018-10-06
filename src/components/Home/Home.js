@@ -64,7 +64,6 @@ class Home extends Component {
       snackbarOpen: false,
       initialProjects: [],
       projects: [],
-      sortedProjectsByDate: [],
       snackbarText: '',
     };
     this.addProject = this.addProject.bind(this);
